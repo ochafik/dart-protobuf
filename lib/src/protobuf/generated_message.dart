@@ -17,7 +17,138 @@ bool _isUnsigned64(Int64 value) => value is Int64;
 bool _isFloat32(double value) => value.isNaN || value.isInfinite ||
     _inRange(-3.4028234663852886E38, value, 3.4028234663852886E38);
 
-abstract class GeneratedMessage {
+abstract class GeneratedMessage extends GeneratedMessageMixin {
+
+  // Short names for use in generated code.
+
+  // _O_ptional.
+  static const int OB = GeneratedMessageMixin._OPTIONAL_BOOL;
+  static const int OY = GeneratedMessageMixin._OPTIONAL_BYTES;
+  static const int OS = GeneratedMessageMixin._OPTIONAL_STRING;
+  static const int OF = GeneratedMessageMixin._OPTIONAL_FLOAT;
+  static const int OD = GeneratedMessageMixin._OPTIONAL_DOUBLE;
+  static const int OE = GeneratedMessageMixin._OPTIONAL_ENUM;
+  static const int OG = GeneratedMessageMixin._OPTIONAL_GROUP;
+  static const int O3 = GeneratedMessageMixin._OPTIONAL_INT32;
+  static const int O6 = GeneratedMessageMixin._OPTIONAL_INT64;
+  static const int OS3 = GeneratedMessageMixin._OPTIONAL_SINT32;
+  static const int OS6 = GeneratedMessageMixin._OPTIONAL_SINT64;
+  static const int OU3 = GeneratedMessageMixin._OPTIONAL_UINT32;
+  static const int OU6 = GeneratedMessageMixin._OPTIONAL_UINT64;
+  static const int OF3 = GeneratedMessageMixin._OPTIONAL_FIXED32;
+  static const int OF6 = GeneratedMessageMixin._OPTIONAL_FIXED64;
+  static const int OSF3 = GeneratedMessageMixin._OPTIONAL_SFIXED32;
+  static const int OSF6 = GeneratedMessageMixin._OPTIONAL_SFIXED64;
+  static const int OM = GeneratedMessageMixin._OPTIONAL_MESSAGE;
+
+  // re_Q_uired.
+  static const int QB = GeneratedMessageMixin._REQUIRED_BOOL;
+  static const int QY = GeneratedMessageMixin._REQUIRED_BYTES;
+  static const int QS = GeneratedMessageMixin._REQUIRED_STRING;
+  static const int QF = GeneratedMessageMixin._REQUIRED_FLOAT;
+  static const int QD = GeneratedMessageMixin._REQUIRED_DOUBLE;
+  static const int QE = GeneratedMessageMixin._REQUIRED_ENUM;
+  static const int QG = GeneratedMessageMixin._REQUIRED_GROUP;
+  static const int Q3 = GeneratedMessageMixin._REQUIRED_INT32;
+  static const int Q6 = GeneratedMessageMixin._REQUIRED_INT64;
+  static const int QS3 = GeneratedMessageMixin._REQUIRED_SINT32;
+  static const int QS6 = GeneratedMessageMixin._REQUIRED_SINT64;
+  static const int QU3 = GeneratedMessageMixin._REQUIRED_UINT32;
+  static const int QU6 = GeneratedMessageMixin._REQUIRED_UINT64;
+  static const int QF3 = GeneratedMessageMixin._REQUIRED_FIXED32;
+  static const int QF6 = GeneratedMessageMixin._REQUIRED_FIXED64;
+  static const int QSF3 = GeneratedMessageMixin._REQUIRED_SFIXED32;
+  static const int QSF6 = GeneratedMessageMixin._REQUIRED_SFIXED64;
+  static const int QM = GeneratedMessageMixin._REQUIRED_MESSAGE;
+
+  // re_P_eated.
+  static const int PB = GeneratedMessageMixin._REPEATED_BOOL;
+  static const int PY = GeneratedMessageMixin._REPEATED_BYTES;
+  static const int PS = GeneratedMessageMixin._REPEATED_STRING;
+  static const int PF = GeneratedMessageMixin._REPEATED_FLOAT;
+  static const int PD = GeneratedMessageMixin._REPEATED_DOUBLE;
+  static const int PE = GeneratedMessageMixin._REPEATED_ENUM;
+  static const int PG = GeneratedMessageMixin._REPEATED_GROUP;
+  static const int P3 = GeneratedMessageMixin._REPEATED_INT32;
+  static const int P6 = GeneratedMessageMixin._REPEATED_INT64;
+  static const int PS3 = GeneratedMessageMixin._REPEATED_SINT32;
+  static const int PS6 = GeneratedMessageMixin._REPEATED_SINT64;
+  static const int PU3 = GeneratedMessageMixin._REPEATED_UINT32;
+  static const int PU6 = GeneratedMessageMixin._REPEATED_UINT64;
+  static const int PF3 = GeneratedMessageMixin._REPEATED_FIXED32;
+  static const int PF6 = GeneratedMessageMixin._REPEATED_FIXED64;
+  static const int PSF3 = GeneratedMessageMixin._REPEATED_SFIXED32;
+  static const int PSF6 = GeneratedMessageMixin._REPEATED_SFIXED64;
+  static const int PM = GeneratedMessageMixin._REPEATED_MESSAGE;
+
+  // pac_K_ed.
+  static const int KB = GeneratedMessageMixin._PACKED_BOOL;
+  static const int KE = GeneratedMessageMixin._PACKED_ENUM;
+  static const int KF = GeneratedMessageMixin._PACKED_FLOAT;
+  static const int KD = GeneratedMessageMixin._PACKED_DOUBLE;
+  static const int K3 = GeneratedMessageMixin._PACKED_INT32;
+  static const int K6 = GeneratedMessageMixin._PACKED_INT64;
+  static const int KS3 = GeneratedMessageMixin._PACKED_SINT32;
+  static const int KS6 = GeneratedMessageMixin._PACKED_SINT64;
+  static const int KU3 = GeneratedMessageMixin._PACKED_UINT32;
+  static const int KU6 = GeneratedMessageMixin._PACKED_UINT64;
+  static const int KF3 = GeneratedMessageMixin._PACKED_FIXED32;
+  static const int KF6 = GeneratedMessageMixin._PACKED_FIXED64;
+  static const int KSF3 = GeneratedMessageMixin._PACKED_SFIXED32;
+  static const int KSF6 = GeneratedMessageMixin._PACKED_SFIXED64;
+
+  // Range of integers in JSON (53-bit integers).
+  static Int64 MAX_JSON_INT = new Int64.fromInts(0x200000, 0);
+  static Int64 MIN_JSON_INT = -MAX_JSON_INT;
+
+  // Closures commonly used by initializers.
+  static String _STRING_EMPTY() => '';
+  static List<int> _BYTES_EMPTY() => new PbList<int>();
+  static bool _BOOL_FALSE() => false;
+  static int _INT_ZERO() => 0;
+  static double _DOUBLE_ZERO() => 0.0;
+
+  static MakeDefaultFunc _defaultForType(int type) {
+    switch (type) {
+    case GeneratedMessageMixin._OPTIONAL_BOOL: case GeneratedMessageMixin._REQUIRED_BOOL:
+      return _BOOL_FALSE;
+    case GeneratedMessageMixin._OPTIONAL_BYTES: case GeneratedMessageMixin._REQUIRED_BYTES:
+      return _BYTES_EMPTY;
+    case GeneratedMessageMixin._OPTIONAL_STRING: case GeneratedMessageMixin._REQUIRED_STRING:
+      return _STRING_EMPTY;
+    case GeneratedMessageMixin._OPTIONAL_FLOAT: case GeneratedMessageMixin._REQUIRED_FLOAT:
+    case GeneratedMessageMixin._OPTIONAL_DOUBLE: case GeneratedMessageMixin._REQUIRED_DOUBLE:
+      return _DOUBLE_ZERO;
+    case GeneratedMessageMixin._OPTIONAL_INT32: case GeneratedMessageMixin._REQUIRED_INT32:
+    case GeneratedMessageMixin._OPTIONAL_INT64: case GeneratedMessageMixin._REQUIRED_INT64:
+    case GeneratedMessageMixin._OPTIONAL_SINT32: case GeneratedMessageMixin._REQUIRED_SINT32:
+    case GeneratedMessageMixin._OPTIONAL_SINT64: case GeneratedMessageMixin._REQUIRED_SINT64:
+    case GeneratedMessageMixin._OPTIONAL_UINT32: case GeneratedMessageMixin._REQUIRED_UINT32:
+    case GeneratedMessageMixin._OPTIONAL_UINT64: case GeneratedMessageMixin._REQUIRED_UINT64:
+    case GeneratedMessageMixin._OPTIONAL_FIXED32: case GeneratedMessageMixin._REQUIRED_FIXED32:
+    case GeneratedMessageMixin._OPTIONAL_FIXED64: case GeneratedMessageMixin._REQUIRED_FIXED64:
+    case GeneratedMessageMixin._OPTIONAL_SFIXED32: case GeneratedMessageMixin._REQUIRED_SFIXED32:
+    case GeneratedMessageMixin._OPTIONAL_SFIXED64: case GeneratedMessageMixin._REQUIRED_SFIXED64:
+      return _INT_ZERO;
+    default:
+      return null;
+    }
+  }
+
+  GeneratedMessage();
+
+  GeneratedMessage.fromBuffer(List<int> input,
+                              ExtensionRegistry extensionRegistry) {
+    mergeFromBuffer(input, extensionRegistry);
+  }
+
+  GeneratedMessage.fromJson(String input,
+                            ExtensionRegistry extensionRegistry) {
+    mergeFromJson(input, extensionRegistry);
+  }
+}
+
+abstract class GeneratedMessageMixin {
   static const int _REQUIRED_BIT      = 0x1;
   static const int _REPEATED_BIT      = 0x2;
   static const int _PACKED_BIT        = 0x4;
@@ -114,138 +245,126 @@ abstract class GeneratedMessage {
       _SFIXED32_BIT;
   static const int _PACKED_SFIXED64 = _REPEATED_BIT | _PACKED_BIT |
       _SFIXED64_BIT;
-
-  // Short names for use in generated code.
-
-  // _O_ptional.
-  static const int OB = _OPTIONAL_BOOL;
-  static const int OY = _OPTIONAL_BYTES;
-  static const int OS = _OPTIONAL_STRING;
-  static const int OF = _OPTIONAL_FLOAT;
-  static const int OD = _OPTIONAL_DOUBLE;
-  static const int OE = _OPTIONAL_ENUM;
-  static const int OG = _OPTIONAL_GROUP;
-  static const int O3 = _OPTIONAL_INT32;
-  static const int O6 = _OPTIONAL_INT64;
-  static const int OS3 = _OPTIONAL_SINT32;
-  static const int OS6 = _OPTIONAL_SINT64;
-  static const int OU3 = _OPTIONAL_UINT32;
-  static const int OU6 = _OPTIONAL_UINT64;
-  static const int OF3 = _OPTIONAL_FIXED32;
-  static const int OF6 = _OPTIONAL_FIXED64;
-  static const int OSF3 = _OPTIONAL_SFIXED32;
-  static const int OSF6 = _OPTIONAL_SFIXED64;
-  static const int OM = _OPTIONAL_MESSAGE;
-
-  // re_Q_uired.
-  static const int QB = _REQUIRED_BOOL;
-  static const int QY = _REQUIRED_BYTES;
-  static const int QS = _REQUIRED_STRING;
-  static const int QF = _REQUIRED_FLOAT;
-  static const int QD = _REQUIRED_DOUBLE;
-  static const int QE = _REQUIRED_ENUM;
-  static const int QG = _REQUIRED_GROUP;
-  static const int Q3 = _REQUIRED_INT32;
-  static const int Q6 = _REQUIRED_INT64;
-  static const int QS3 = _REQUIRED_SINT32;
-  static const int QS6 = _REQUIRED_SINT64;
-  static const int QU3 = _REQUIRED_UINT32;
-  static const int QU6 = _REQUIRED_UINT64;
-  static const int QF3 = _REQUIRED_FIXED32;
-  static const int QF6 = _REQUIRED_FIXED64;
-  static const int QSF3 = _REQUIRED_SFIXED32;
-  static const int QSF6 = _REQUIRED_SFIXED64;
-  static const int QM = _REQUIRED_MESSAGE;
-
-  // re_P_eated.
-  static const int PB = _REPEATED_BOOL;
-  static const int PY = _REPEATED_BYTES;
-  static const int PS = _REPEATED_STRING;
-  static const int PF = _REPEATED_FLOAT;
-  static const int PD = _REPEATED_DOUBLE;
-  static const int PE = _REPEATED_ENUM;
-  static const int PG = _REPEATED_GROUP;
-  static const int P3 = _REPEATED_INT32;
-  static const int P6 = _REPEATED_INT64;
-  static const int PS3 = _REPEATED_SINT32;
-  static const int PS6 = _REPEATED_SINT64;
-  static const int PU3 = _REPEATED_UINT32;
-  static const int PU6 = _REPEATED_UINT64;
-  static const int PF3 = _REPEATED_FIXED32;
-  static const int PF6 = _REPEATED_FIXED64;
-  static const int PSF3 = _REPEATED_SFIXED32;
-  static const int PSF6 = _REPEATED_SFIXED64;
-  static const int PM = _REPEATED_MESSAGE;
-
-  // pac_K_ed.
-  static const int KB = _PACKED_BOOL;
-  static const int KE = _PACKED_ENUM;
-  static const int KF = _PACKED_FLOAT;
-  static const int KD = _PACKED_DOUBLE;
-  static const int K3 = _PACKED_INT32;
-  static const int K6 = _PACKED_INT64;
-  static const int KS3 = _PACKED_SINT32;
-  static const int KS6 = _PACKED_SINT64;
-  static const int KU3 = _PACKED_UINT32;
-  static const int KU6 = _PACKED_UINT64;
-  static const int KF3 = _PACKED_FIXED32;
-  static const int KF6 = _PACKED_FIXED64;
-  static const int KSF3 = _PACKED_SFIXED32;
-  static const int KSF6 = _PACKED_SFIXED64;
-
-  // Range of integers in JSON (53-bit integers).
-  static Int64 MAX_JSON_INT = new Int64.fromInts(0x200000, 0);
-  static Int64 MIN_JSON_INT = -MAX_JSON_INT;
-
-  // Closures commonly used by initializers.
-  static String _STRING_EMPTY() => '';
-  static List<int> _BYTES_EMPTY() => new PbList<int>();
-  static bool _BOOL_FALSE() => false;
-  static int _INT_ZERO() => 0;
-  static double _DOUBLE_ZERO() => 0.0;
-
-  static MakeDefaultFunc _defaultForType(int type) {
-    switch (type) {
-    case _OPTIONAL_BOOL: case _REQUIRED_BOOL:
-      return _BOOL_FALSE;
-    case _OPTIONAL_BYTES: case _REQUIRED_BYTES:
-      return _BYTES_EMPTY;
-    case _OPTIONAL_STRING: case _REQUIRED_STRING:
-      return _STRING_EMPTY;
-    case _OPTIONAL_FLOAT: case _REQUIRED_FLOAT:
-    case _OPTIONAL_DOUBLE: case _REQUIRED_DOUBLE:
-      return _DOUBLE_ZERO;
-    case _OPTIONAL_INT32: case _REQUIRED_INT32:
-    case _OPTIONAL_INT64: case _REQUIRED_INT64:
-    case _OPTIONAL_SINT32: case _REQUIRED_SINT32:
-    case _OPTIONAL_SINT64: case _REQUIRED_SINT64:
-    case _OPTIONAL_UINT32: case _REQUIRED_UINT32:
-    case _OPTIONAL_UINT64: case _REQUIRED_UINT64:
-    case _OPTIONAL_FIXED32: case _REQUIRED_FIXED32:
-    case _OPTIONAL_FIXED64: case _REQUIRED_FIXED64:
-    case _OPTIONAL_SFIXED32: case _REQUIRED_SFIXED32:
-    case _OPTIONAL_SFIXED64: case _REQUIRED_SFIXED64:
-      return _INT_ZERO;
-    default:
-      return null;
-    }
-  }
+//
+//  // Short names for use in generated code.
+//
+//  // _O_ptional.
+//  static const int OB = _OPTIONAL_BOOL;
+//  static const int OY = _OPTIONAL_BYTES;
+//  static const int OS = _OPTIONAL_STRING;
+//  static const int OF = _OPTIONAL_FLOAT;
+//  static const int OD = _OPTIONAL_DOUBLE;
+//  static const int OE = _OPTIONAL_ENUM;
+//  static const int OG = _OPTIONAL_GROUP;
+//  static const int O3 = _OPTIONAL_INT32;
+//  static const int O6 = _OPTIONAL_INT64;
+//  static const int OS3 = _OPTIONAL_SINT32;
+//  static const int OS6 = _OPTIONAL_SINT64;
+//  static const int OU3 = _OPTIONAL_UINT32;
+//  static const int OU6 = _OPTIONAL_UINT64;
+//  static const int OF3 = _OPTIONAL_FIXED32;
+//  static const int OF6 = _OPTIONAL_FIXED64;
+//  static const int OSF3 = _OPTIONAL_SFIXED32;
+//  static const int OSF6 = _OPTIONAL_SFIXED64;
+//  static const int OM = _OPTIONAL_MESSAGE;
+//
+//  // re_Q_uired.
+//  static const int QB = _REQUIRED_BOOL;
+//  static const int QY = _REQUIRED_BYTES;
+//  static const int QS = _REQUIRED_STRING;
+//  static const int QF = _REQUIRED_FLOAT;
+//  static const int QD = _REQUIRED_DOUBLE;
+//  static const int QE = _REQUIRED_ENUM;
+//  static const int QG = _REQUIRED_GROUP;
+//  static const int Q3 = _REQUIRED_INT32;
+//  static const int Q6 = _REQUIRED_INT64;
+//  static const int QS3 = _REQUIRED_SINT32;
+//  static const int QS6 = _REQUIRED_SINT64;
+//  static const int QU3 = _REQUIRED_UINT32;
+//  static const int QU6 = _REQUIRED_UINT64;
+//  static const int QF3 = _REQUIRED_FIXED32;
+//  static const int QF6 = _REQUIRED_FIXED64;
+//  static const int QSF3 = _REQUIRED_SFIXED32;
+//  static const int QSF6 = _REQUIRED_SFIXED64;
+//  static const int QM = _REQUIRED_MESSAGE;
+//
+//  // re_P_eated.
+//  static const int PB = _REPEATED_BOOL;
+//  static const int PY = _REPEATED_BYTES;
+//  static const int PS = _REPEATED_STRING;
+//  static const int PF = _REPEATED_FLOAT;
+//  static const int PD = _REPEATED_DOUBLE;
+//  static const int PE = _REPEATED_ENUM;
+//  static const int PG = _REPEATED_GROUP;
+//  static const int P3 = _REPEATED_INT32;
+//  static const int P6 = _REPEATED_INT64;
+//  static const int PS3 = _REPEATED_SINT32;
+//  static const int PS6 = _REPEATED_SINT64;
+//  static const int PU3 = _REPEATED_UINT32;
+//  static const int PU6 = _REPEATED_UINT64;
+//  static const int PF3 = _REPEATED_FIXED32;
+//  static const int PF6 = _REPEATED_FIXED64;
+//  static const int PSF3 = _REPEATED_SFIXED32;
+//  static const int PSF6 = _REPEATED_SFIXED64;
+//  static const int PM = _REPEATED_MESSAGE;
+//
+//  // pac_K_ed.
+//  static const int KB = _PACKED_BOOL;
+//  static const int KE = _PACKED_ENUM;
+//  static const int KF = _PACKED_FLOAT;
+//  static const int KD = _PACKED_DOUBLE;
+//  static const int K3 = _PACKED_INT32;
+//  static const int K6 = _PACKED_INT64;
+//  static const int KS3 = _PACKED_SINT32;
+//  static const int KS6 = _PACKED_SINT64;
+//  static const int KU3 = _PACKED_UINT32;
+//  static const int KU6 = _PACKED_UINT64;
+//  static const int KF3 = _PACKED_FIXED32;
+//  static const int KF6 = _PACKED_FIXED64;
+//  static const int KSF3 = _PACKED_SFIXED32;
+//  static const int KSF6 = _PACKED_SFIXED64;
+//
+//  // Range of integers in JSON (53-bit integers).
+//  static Int64 MAX_JSON_INT = new Int64.fromInts(0x200000, 0);
+//  static Int64 MIN_JSON_INT = -MAX_JSON_INT;
+//
+//  // Closures commonly used by initializers.
+//  static String _STRING_EMPTY() => '';
+//  static List<int> _BYTES_EMPTY() => new PbList<int>();
+//  static bool _BOOL_FALSE() => false;
+//  static int _INT_ZERO() => 0;
+//  static double _DOUBLE_ZERO() => 0.0;
+//
+//  static MakeDefaultFunc _defaultForType(int type) {
+//    switch (type) {
+//    case _OPTIONAL_BOOL: case _REQUIRED_BOOL:
+//      return _BOOL_FALSE;
+//    case _OPTIONAL_BYTES: case _REQUIRED_BYTES:
+//      return _BYTES_EMPTY;
+//    case _OPTIONAL_STRING: case _REQUIRED_STRING:
+//      return _STRING_EMPTY;
+//    case _OPTIONAL_FLOAT: case _REQUIRED_FLOAT:
+//    case _OPTIONAL_DOUBLE: case _REQUIRED_DOUBLE:
+//      return _DOUBLE_ZERO;
+//    case _OPTIONAL_INT32: case _REQUIRED_INT32:
+//    case _OPTIONAL_INT64: case _REQUIRED_INT64:
+//    case _OPTIONAL_SINT32: case _REQUIRED_SINT32:
+//    case _OPTIONAL_SINT64: case _REQUIRED_SINT64:
+//    case _OPTIONAL_UINT32: case _REQUIRED_UINT32:
+//    case _OPTIONAL_UINT64: case _REQUIRED_UINT64:
+//    case _OPTIONAL_FIXED32: case _REQUIRED_FIXED32:
+//    case _OPTIONAL_FIXED64: case _REQUIRED_FIXED64:
+//    case _OPTIONAL_SFIXED32: case _REQUIRED_SFIXED32:
+//    case _OPTIONAL_SFIXED64: case _REQUIRED_SFIXED64:
+//      return _INT_ZERO;
+//    default:
+//      return null;
+//    }
+//  }
 
   final Map<int, dynamic> _fieldValues = new Map<int, dynamic>();
   final Map<int, Extension> _extensions = new Map<int, Extension>();
   final UnknownFieldSet unknownFields = new UnknownFieldSet();
-
-  GeneratedMessage();
-
-  GeneratedMessage.fromBuffer(List<int> input,
-                              ExtensionRegistry extensionRegistry) {
-    mergeFromBuffer(input, extensionRegistry);
-  }
-
-  GeneratedMessage.fromJson(String input,
-                            ExtensionRegistry extensionRegistry) {
-    mergeFromJson(input, extensionRegistry);
-  }
 
   bool hasRequiredFields() => info_.hasRequiredFields;
 
