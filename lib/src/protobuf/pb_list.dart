@@ -4,14 +4,24 @@
 
 part of protobuf;
 
+typedef CheckFunc(x);
+
 class PbList<E> extends Object with ListMixin<E> implements List<E> {
+  final List<E> _wrappedList;
+  final CheckFunc check;
 
-  PbList() : _wrappedList = <E>[];
+  PbList({this.check: _checkNotNull}) : _wrappedList = <E>[] {
+    assert(check != null);
+  }
 
-  PbList.from(List from) : _wrappedList = new List<E>.from(from);
+  PbList.from(List from)
+      : _wrappedList = new List<E>.from(from),
+        check = _checkNotNull;
 
-  bool operator ==(other) =>
-      (other is PbList) && _areListsEqual(other, this);
+  factory PbList.forFieldType(int fieldType) =>
+      new PbList(check: getCheckFunction(fieldType));
+
+  bool operator ==(other) => (other is PbList) && _areListsEqual(other, this);
 
   int get hashCode {
     int hash = 0;
@@ -87,8 +97,10 @@ class PbList<E> extends Object with ListMixin<E> implements List<E> {
    * Throws an [UnsupportedError] if the list is
    * not extendable.
    */
-  void setRange(int start, int end, List<E> from, [int skipCount = 0]) {
-    from.sublist(skipCount, skipCount + end - start).forEach(_validate);
+  void setRange(int start, int end, Iterable<E> from, [int skipCount = 0]) {
+    // NOTE: In case `take()` returns less than `end - start` elements, the
+    // _wrappedList will fail with a `StateError`.
+    from.skip(skipCount).take(end - start).forEach(_validate);
     _wrappedList.setRange(start, end, from, skipCount);
   }
 
@@ -112,7 +124,7 @@ class PbList<E> extends Object with ListMixin<E> implements List<E> {
   }
 
   /**
-   * Overrites elements of `this` with elements of [iterable] starting at
+   * Overwrites elements of `this` with elements of [iterable] starting at
    * position [index] in the list.
    *
    * Elements in [iterable] must be valid and not nullable for the PbList type.
@@ -128,82 +140,10 @@ class PbList<E> extends Object with ListMixin<E> implements List<E> {
   int get length => _wrappedList.length;
 
   void _validate(E val) {
-    if (val == null) {
-      throw new ArgumentError('Value is null');
-    }
+    check(val);
+    // TODO: remove after migration to check functions is finished
     if (val is! E) {
-      throw new ArgumentError(
-          'Value ($val) is not of the correct type');
-    }
-    _validateElement(val);
-  }
-
-  void _validateElement(E val) {}
-
-  final List<E> _wrappedList;
-}
-
-/**
- * A [PbList] that requires its elements to be [int]s in the range
- * [:-2^31, 2^31 - 1:].
- */
-class PbSint32List extends PbList<int> {
-  void _validateElement(int val) {
-    if (!_isSigned32(val)) {
-      throw new ArgumentError('Illegal to add value (${val}): out '
-          'of range for int32');
-    }
-  }
-}
-
-/**
- * A [PbList] that requires its elements to be [int]s in the range
- * [:0, 2^32 - 1:].
- */
-class PbUint32List extends PbList<int> {
-  void _validateElement(int val) {
-    if (!_isUnsigned32(val)) {
-      throw new ArgumentError('Illegal to add value (${val}):'
-          ' out of range for uint32');
-    }
-  }
-}
-
-/**
- * A [PbList] that requires its elements to be [int]s in the range
- * [:2^-63, 2^63 - 1:].
- */
-class PbSint64List extends PbList<Int64> {
-  void _validateElement(Int64 val) {
-    if (!_isSigned64(val)) {
-      throw new ArgumentError('Illegal to add value (${val}):'
-          ' out of range for sint64');
-    }
-  }
-}
-
-/**
- * A [PbList] that requires its elements to be [int]s in the range
- * [:0, 2^64 - 1:].
- */
-class PbUint64List extends PbList<Int64> {
-  void _validateElement(Int64 val) {
-    if (!_isUnsigned64(val)) {
-      throw new ArgumentError('Illegal to add value (${val}):'
-          ' out of range for uint64');
-    }
-  }
-}
-
-/**
- * A [PbList] that requires its elements to be [double]s in the range
- * [:-3.4E38, 3.4E38:], i.e., with the IEEE single-precision range.
- */
-class PbFloatList extends PbList<double> {
-  void _validateElement(double val) {
-    if (!_isFloat32(val)) {
-      throw new ArgumentError('Illegal to add value (${val}):'
-          ' out of range for float');
+      throw new ArgumentError('Value ($val) is not of the correct type');
     }
   }
 }

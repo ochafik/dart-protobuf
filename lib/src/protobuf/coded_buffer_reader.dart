@@ -21,9 +21,13 @@ class CodedBufferReader {
       {int recursionLimit: DEFAULT_RECURSION_LIMIT,
       int sizeLimit: DEFAULT_SIZE_LIMIT}) :
       _buffer =
-          new Uint8List(buffer.length)..setRange(0, buffer.length, buffer),
+          buffer is Uint8List
+            ? buffer
+            : new Uint8List(buffer.length)..setRange(0, buffer.length, buffer),
       _recursionLimit = recursionLimit,
-      _sizeLimit = math.min(sizeLimit, buffer.length);
+      _sizeLimit = math.min(sizeLimit, buffer.length) {
+    _currentLimit = _sizeLimit;
+  }
 
   void checkLastTagWas(int value) {
     if (_lastTag != value) {
@@ -31,9 +35,7 @@ class CodedBufferReader {
     }
   }
 
-  bool isAtEnd() =>
-      (_currentLimit != -1 && _bufferPos >= _currentLimit)
-          || _bufferPos >= _buffer.length;
+  bool isAtEnd() => _bufferPos >= _currentLimit;
 
   void _withLimit(int byteLimit, callback) {
     if (byteLimit < 0) {
@@ -52,9 +54,9 @@ class CodedBufferReader {
   }
 
   void _checkLimit(int increment) {
+    assert(_currentLimit != -1);
     _bufferPos += increment;
-    if ((_currentLimit != -1 && _bufferPos > _currentLimit) ||
-        _bufferPos > _sizeLimit) {
+    if (_bufferPos > _currentLimit) {
       throw new InvalidProtocolBufferException.truncatedMessage();
     }
   }
@@ -65,7 +67,7 @@ class CodedBufferReader {
       throw new InvalidProtocolBufferException.recursionLimitExceeded();
     }
     ++_recursionDepth;
-    message.mergeFromCodedBufferReader(this);
+    message.mergeFromCodedBufferReader(this, extensionRegistry);
     checkLastTagWas(makeTag(fieldNumber, WIRETYPE_END_GROUP));
     --_recursionDepth;
   }
@@ -88,12 +90,22 @@ class CodedBufferReader {
     if (_recursionDepth >= _recursionLimit) {
       throw new InvalidProtocolBufferException.recursionLimitExceeded();
     }
-    _withLimit(length, () {
-        ++_recursionDepth;
-        message.mergeFromCodedBufferReader(this);
-        checkLastTagWas(0);
-        --_recursionDepth;
-    });
+    if (length < 0) {
+      throw new ArgumentError(
+          'CodedBufferReader encountered an embedded string or message'
+          ' which claimed to have negative size.');
+    }
+
+    int oldLimit = _currentLimit;
+    _currentLimit = _bufferPos + length;
+    if (_currentLimit > oldLimit) {
+      throw new InvalidProtocolBufferException.truncatedMessage();
+    }
+    ++_recursionDepth;
+    message.mergeFromCodedBufferReader(this, extensionRegistry);
+    checkLastTagWas(0);
+    --_recursionDepth;
+    _currentLimit = oldLimit;
   }
 
   int readEnum() => readInt32();
@@ -115,7 +127,8 @@ class CodedBufferReader {
   List<int> readBytes() {
     int length = readInt32();
     _checkLimit(length);
-    return new Uint8List.view(_buffer.buffer, _bufferPos - length, length);
+    return new Uint8List.view(_buffer.buffer,
+        _buffer.offsetInBytes + _bufferPos - length, length);
   }
   String readString() => _UTF8.decode(readBytes());
   double readFloat() =>
@@ -152,9 +165,12 @@ class CodedBufferReader {
   }
 
   int _readRawVarint32([bool signed = true]) {
+    // Read up to 10 bytes.
+    int bytes = _currentLimit - _bufferPos;
+    if (bytes > 10) bytes = 10;
     int result = 0;
-    for (int i = 0; i < 10; i++) {
-      int byte = _readRawVarintByte();
+    for (int i = 0; i < bytes; i++) {
+      int byte = _buffer[_bufferPos++];
       result |= (byte & 0x7f) << (i * 7);
       if ((byte & 0x80) == 0) {
         result &= 0xffffffff;
@@ -195,7 +211,7 @@ class CodedBufferReader {
 
   ByteData _readByteData(int sizeInBytes) {
     _checkLimit(sizeInBytes);
-    return new ByteData.view(
-        _buffer.buffer, _bufferPos - sizeInBytes, sizeInBytes);
+    return new ByteData.view(_buffer.buffer,
+        _buffer.offsetInBytes + _bufferPos - sizeInBytes, sizeInBytes);
   }
 }

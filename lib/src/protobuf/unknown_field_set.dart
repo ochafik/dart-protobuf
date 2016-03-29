@@ -15,9 +15,12 @@ class UnknownFieldSet {
     mergeFromUnknownFieldSet(unknownFieldSet);
   }
 
-  UnknownFieldSet clone() => new UnknownFieldSet._clone(this);
+   UnknownFieldSet clone() => new UnknownFieldSet._clone(this);
 
-  Map<int, UnknownFieldSetField> asMap() => new Map.from(_fields);
+   bool get isEmpty => _fields.isEmpty;
+   bool get isNotEmpty => _fields.isNotEmpty;
+
+   Map<int, UnknownFieldSetField> asMap() => new Map.from(_fields);
 
   void clear() {
     _fields.clear();
@@ -223,11 +226,11 @@ class UnknownFieldSetField {
       output.writeField(fieldNumber, type, value);
     }
 
-    write(GeneratedMessage._REPEATED_UINT64, varints);
-    write(GeneratedMessage._REPEATED_FIXED32, fixed32s);
-    write(GeneratedMessage._REPEATED_FIXED64, fixed64s);
-    write(GeneratedMessage._REPEATED_BYTES, lengthDelimited);
-    write(GeneratedMessage._REPEATED_GROUP, groups);
+    write(PbFieldType._REPEATED_UINT64, varints);
+    write(PbFieldType._REPEATED_FIXED32, fixed32s);
+    write(PbFieldType._REPEATED_FIXED64, fixed64s);
+    write(PbFieldType._REPEATED_BYTES, lengthDelimited);
+    write(PbFieldType._REPEATED_GROUP, groups);
   }
 
   void addGroup(UnknownFieldSet value) {
